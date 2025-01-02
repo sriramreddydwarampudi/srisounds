@@ -39136,18 +39136,32 @@ ${indentation}`
         button.style.backgroundColor = color;
       });
     }
+    async function createNewCsoundInstance() {
+      try {
+        const newCsoundInstance = new Csound();
+        await newCsoundInstance.initialize();
+        return newCsoundInstance;
+      } catch (error) {
+        logToDebugView(`Error creating new Csound instance: ${error.message}`);
+      }
+    }
     const startStopButton = document.createElement("button");
     startStopButton.id = "startStopButton";
     startStopButton.textContent = "Start/Stop";
+    async function resetCsound() {
+      try {
+        await csoundInstance.stop();
+        logToDebugView("Csound stopped.");
+        isCsoundRunning = false;
+        csoundInstance = await createNewCsoundInstance();
+        logToDebugView("Csound instance reset.");
+      } catch (error) {
+        logToDebugView(`Error stopping Csound: ${error.message}`);
+      }
+    }
     startStopButton.addEventListener("click", async () => {
       if (isCsoundRunning) {
-        try {
-          await csoundInstance.stop();
-          logToDebugView("Csound stopped.");
-          isCsoundRunning = false;
-        } catch (error) {
-          logToDebugView(`Error stopping Csound: ${error.message}`);
-        }
+        await resetCsound();
       } else {
         await compileAndPlayCsound();
       }
