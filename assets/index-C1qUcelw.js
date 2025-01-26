@@ -38970,7 +38970,7 @@ const App = () => {
     const editorContainer = document.createElement("div");
     editorContainer.style.cssText = `
   height: 500px; /* Fixed height for the editor */
-  width: 100%;   /* Full width of the parent */
+  width: 380px;   /* Full width of the parent */
   overflow-y: auto; /* Enable vertical scrolling when content overflows vertically */
   overflow-x: auto; /* Enable horizontal scrolling when content overflows horizontally */
   position: relative; /* Keep it within the normal flow of the page */
